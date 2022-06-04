@@ -1,7 +1,12 @@
 export default {
   // API URL's
-  WEATHER_API_BASE_URL: (latitude: number, longitude: number, apiKey: string) =>
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`,
+  WEATHER_API_BASE_URL: (
+    latitude: number,
+    longitude: number,
+    units: 'standard' | 'metric' | 'imperial',
+    apiKey: string,
+  ) =>
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`,
 
   // MAPS
   INITIAL_LATITUDE: 51.5074,

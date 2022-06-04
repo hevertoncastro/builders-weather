@@ -98,8 +98,8 @@ const App = () => {
 
     Geolocation.getCurrentPosition(
       position => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
+        setLatitude(position.coords?.latitude);
+        setLongitude(position.coords?.longitude);
       },
       error => {
         setLatitude(config.INITIAL_LATITUDE);
@@ -118,6 +118,24 @@ const App = () => {
     );
   };
 
+  const getWeatherData = async () => {
+    return await fetch(
+      config.WEATHER_API_BASE_URL(
+        latitude,
+        longitude,
+        'metric',
+        '0888efd93e546e0469e210d3cac65c00',
+      ),
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log('weather', JSON.stringify(data, null, 2));
+        return data;
+      });
+  };
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -126,6 +144,7 @@ const App = () => {
         onPress={getDeviceCurrentLocation}
       />
       <MapView latitude={latitude} longitude={longitude} />
+      <Button title="Get Weather Data" onPress={getWeatherData} />
     </SafeAreaView>
   );
 };

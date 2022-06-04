@@ -19,10 +19,10 @@ const MapView = ({latitude, longitude}: MapViewProps) => {
           latitude: latitude,
           longitude: longitude,
         },
-        pitch: 0,
-        heading: 0,
-        altitude: 1000,
-        zoom: 12,
+        pitch: config.PITCH,
+        heading: config.HEADING,
+        altitude: config.ALTITUDE,
+        zoom: config.ZOOM,
       });
     }
   }, [latitude, longitude]);
@@ -34,8 +34,8 @@ const MapView = ({latitude, longitude}: MapViewProps) => {
         customMapStyle={lightTheme}
         initialCamera={{
           center: {
-            latitude: config.INITIAL_LATITUDE,
-            longitude: config.INITIAL_LONGITUDE,
+            latitude: latitude ? latitude : config.INITIAL_LATITUDE,
+            longitude: longitude ? longitude : config.INITIAL_LONGITUDE,
           },
           heading: config.HEADING,
           pitch: config.PITCH,
@@ -43,7 +43,6 @@ const MapView = ({latitude, longitude}: MapViewProps) => {
           zoom: config.ZOOM,
         }}
         loadingEnabled
-        showsBuildings={false}
         loadingBackgroundColor="white"
         style={StyleSheet.absoluteFillObject}
         rotateEnabled={false}
