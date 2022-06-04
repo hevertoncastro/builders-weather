@@ -1,7 +1,10 @@
 import styled from 'styled-components/native';
+import LinearGradient from 'react-native-linear-gradient';
 import {info, primary, white} from '../../constants/colors';
 
-export const WeatherWidgetWrapper = styled.View`
+export const WeatherWidgetWrapper = styled(LinearGradient).attrs({
+  colors: [info, primary],
+})`
   flex-direction: column;
   align-items: center;
   width: 100%;
