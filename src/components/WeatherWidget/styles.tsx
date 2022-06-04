@@ -18,9 +18,21 @@ export const MainInfo = styled.View`
   justify-content: space-between;
 `;
 
+export const MainInfoTexts = styled.View`
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
 export const Temperature = styled.Text`
   color: ${white};
   font-size: 64px;
+  line-height: 64px;
+`;
+
+export const Description = styled.Text`
+  color: ${white};
+  font-size: 18px;
+  line-height: 18px;
 `;
 
 export const LargeIcon = styled.Image`

@@ -13,10 +13,13 @@ import Geolocation from 'react-native-geolocation-service';
 import MapView from './MapView';
 import config from './src/constants/config';
 import WeatherWidget from './src/components/WeatherWidget';
+import {WeatherApiResponseType} from './src/types/weather';
 
 const App = () => {
   const [latitude, setLatitude] = useState(config.INITIAL_LATITUDE);
   const [longitude, setLongitude] = useState(config.INITIAL_LONGITUDE);
+  const [weatherData, setWeatherData]: WeatherApiResponseType | undefined =
+    useState(undefined);
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -119,11 +122,14 @@ const App = () => {
     );
   };
 
-  const getWeatherData = async () => {
+  const getWeatherData = async (
+    currentLatitude: number,
+    currentLongitude: number,
+  ) => {
     return await fetch(
       config.WEATHER_API_BASE_URL(
-        latitude,
-        longitude,
+        currentLatitude,
+        currentLongitude,
         'metric',
         '0888efd93e546e0469e210d3cac65c00',
       ),
@@ -137,16 +143,38 @@ const App = () => {
       });
   };
 
+  async function handleMapLocationChange(
+    newLatitude: number,
+    newLongitude: number,
+  ) {
+    const weatherResponse = await getWeatherData(newLatitude, newLongitude);
+    if (weatherResponse) {
+      setWeatherData(weatherResponse);
+    }
+  }
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <WeatherWidget humidity="51%" wind="1,2m/s" visibility="14km" />
+      {weatherData ? (
+        <WeatherWidget
+          weatherCode={weatherData?.weather?.[0]?.id}
+          temperature={weatherData?.main?.temp}
+          description={weatherData?.weather?.[0]?.description}
+          humidity={weatherData?.main?.humidity}
+          wind={weatherData?.wind?.speed}
+          visibility={weatherData?.visibility}
+        />
+      ) : null}
       <Button
         title="Get Current Device Location"
         onPress={getDeviceCurrentLocation}
       />
-      <MapView latitude={latitude} longitude={longitude} />
-      <Button title="Get Weather Data" onPress={getWeatherData} />
+      <MapView
+        latitude={latitude}
+        longitude={longitude}
+        onChangeLocation={handleMapLocationChange}
+      />
     </SafeAreaView>
   );
 };

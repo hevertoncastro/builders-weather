@@ -9,20 +9,35 @@ import {
   AsideInfoTitle,
   AsideInfoDescription,
   AsideInfoHolder,
+  Description,
+  MainInfoTexts,
 } from './styles';
 
 interface WeatherWidgetProps {
-  humidity: string;
-  wind: string;
-  visibility: string;
+  weatherCode: number;
+  temperature: number;
+  description: string;
+  humidity: number;
+  wind: number;
+  visibility: number;
 }
 
-export default function ({humidity, wind, visibility}: WeatherWidgetProps) {
+export default function ({
+  weatherCode,
+  temperature,
+  description,
+  humidity,
+  wind,
+  visibility,
+}: WeatherWidgetProps) {
   return (
     <WeatherWidgetWrapper>
       <MainInfo>
-        <WeatherIcon iconCode={301} theme="day" />
-        <Temperature>29º</Temperature>
+        <WeatherIcon iconCode={weatherCode} theme="day" />
+        <MainInfoTexts>
+          <Temperature>{Math.round(temperature)}º</Temperature>
+          <Description>{description}</Description>
+        </MainInfoTexts>
       </MainInfo>
 
       <AsideInfo>
@@ -31,7 +46,7 @@ export default function ({humidity, wind, visibility}: WeatherWidgetProps) {
             resizeMode="center"
             source={require('@assets/icons/humidity.png')}
           />
-          <AsideInfoTitle>{humidity}</AsideInfoTitle>
+          <AsideInfoTitle>{humidity}%</AsideInfoTitle>
           <AsideInfoDescription>Humidity</AsideInfoDescription>
         </AsideInfoHolder>
         <AsideInfoHolder>
@@ -39,7 +54,7 @@ export default function ({humidity, wind, visibility}: WeatherWidgetProps) {
             resizeMode="center"
             source={require('@assets/icons/wind.png')}
           />
-          <AsideInfoTitle>{wind}</AsideInfoTitle>
+          <AsideInfoTitle>{wind}m/s</AsideInfoTitle>
           <AsideInfoDescription>Wind</AsideInfoDescription>
         </AsideInfoHolder>
         <AsideInfoHolder>
@@ -47,7 +62,7 @@ export default function ({humidity, wind, visibility}: WeatherWidgetProps) {
             resizeMode="center"
             source={require('@assets/icons/visibility.png')}
           />
-          <AsideInfoTitle>{visibility}</AsideInfoTitle>
+          <AsideInfoTitle>{Math.round(visibility / 1000)}km</AsideInfoTitle>
           <AsideInfoDescription>Visibility</AsideInfoDescription>
         </AsideInfoHolder>
       </AsideInfo>

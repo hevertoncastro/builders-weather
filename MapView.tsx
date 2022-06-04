@@ -7,9 +7,10 @@ import config from './src/constants/config';
 interface MapViewProps {
   latitude: number;
   longitude: number;
+  onChangeLocation: (newLatitude: number, newLongitude: number) => void;
 }
 
-const MapView = ({latitude, longitude}: MapViewProps) => {
+const MapView = ({latitude, longitude, onChangeLocation}: MapViewProps) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -46,6 +47,9 @@ const MapView = ({latitude, longitude}: MapViewProps) => {
         loadingBackgroundColor="white"
         style={StyleSheet.absoluteFillObject}
         rotateEnabled={false}
+        onRegionChangeComplete={region => {
+          onChangeLocation(region.latitude, region.longitude);
+        }}
       />
     </View>
   );
