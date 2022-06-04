@@ -1,4 +1,4 @@
-export const primary = '#000E40';
+export const primary = '#5e9bfb';
 export const success = '#228340';
 export const accent = '#00d6d6';
 export const link = '#4895b6';
@@ -7,7 +7,7 @@ export const danger = '#B00020';
 export const warning = '#DA3347';
 export const alert = '#FF4E33';
 export const light = '#F4F1F1';
-export const info = '#ABE6FF';
+export const info = '#a4c7fc';
 
 export const grey50 = '#fafafa';
 export const grey100 = '#f5f5f5';

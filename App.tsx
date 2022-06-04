@@ -12,7 +12,7 @@ import {
 import Geolocation from 'react-native-geolocation-service';
 import MapView from './MapView';
 import config from './src/constants/config';
-import WeatherIcon from './src/components/WeatherIcon';
+import WeatherWidget from './src/components/WeatherWidget';
 
 const App = () => {
   const [latitude, setLatitude] = useState(config.INITIAL_LATITUDE);
@@ -140,7 +140,7 @@ const App = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <WeatherIcon iconCode={200} theme="day" />
+      <WeatherWidget humidity="51%" wind="1,2m/s" visibility="14km" />
       <Button
         title="Get Current Device Location"
         onPress={getDeviceCurrentLocation}
