@@ -3,6 +3,14 @@ export default {
   WEATHER_API_BASE_URL: (latitude: number, longitude: number, apiKey: string) =>
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`,
 
+  // MAPS
+  INITIAL_LATITUDE: 51.5074,
+  INITIAL_LONGITUDE: 0.1278,
+  ZOOM: 11,
+  HEADING: 0,
+  PITCH: 0,
+  ALTITUDE: 15000,
+
   LANGUAGES: {
     af: 'Afrikaans',
     al: 'Albanian',
