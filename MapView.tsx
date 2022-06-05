@@ -1,16 +1,23 @@
 import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import RNMapView from 'react-native-maps';
-import {lightTheme} from './src/constants/maps';
+import {darkTheme, lightTheme} from './src/constants/maps';
 import config from './src/constants/config';
+import {black, white, primary} from './src/constants/colors';
 
 interface MapViewProps {
+  theme: 'dark' | 'light';
   latitude: number;
   longitude: number;
   onChangeLocation: (newLatitude: number, newLongitude: number) => void;
 }
 
-const MapView = ({latitude, longitude, onChangeLocation}: MapViewProps) => {
+const MapView = ({
+  theme,
+  latitude,
+  longitude,
+  onChangeLocation,
+}: MapViewProps) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -32,7 +39,7 @@ const MapView = ({latitude, longitude, onChangeLocation}: MapViewProps) => {
     <View style={styles.container}>
       <RNMapView
         ref={mapRef}
-        customMapStyle={lightTheme}
+        customMapStyle={theme === 'dark' ? darkTheme : lightTheme}
         initialCamera={{
           center: {
             latitude: latitude ? latitude : config.INITIAL_LATITUDE,
@@ -43,8 +50,11 @@ const MapView = ({latitude, longitude, onChangeLocation}: MapViewProps) => {
           altitude: config.ALTITUDE,
           zoom: config.ZOOM,
         }}
+        showsCompass={false}
+        mapPadding={{bottom: 200, left: 64, right: 0, top: 0}}
         loadingEnabled
-        loadingBackgroundColor="white"
+        loadingIndicatorColor={primary}
+        loadingBackgroundColor={theme === 'dark' ? black : white}
         style={StyleSheet.absoluteFillObject}
         rotateEnabled={false}
         onRegionChangeComplete={region => {

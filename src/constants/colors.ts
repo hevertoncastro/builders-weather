@@ -16,9 +16,9 @@ export const grey300 = '#e0e0e0';
 export const grey400 = '#bdbdbd';
 export const grey500 = '#9e9e9e';
 export const grey600 = '#757575';
-export const grey700 = '#616161';
-export const grey800 = 'rgba(254, 254, 254, 0.12)';
-export const grey1000 = 'rgba(22, 22, 22, 0.72)';
+export const grey700 = '#2e3041';
+export const grey800 = '#272727';
+export const grey1000 = '#202028';
 export const grey900 = '#161616';
 
 export const grayOpacity200 = 'rgba(22, 22, 22, 0.12)';

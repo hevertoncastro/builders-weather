@@ -2,14 +2,17 @@ import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {info, primary, white} from '../../constants/colors';
 
-export const WeatherWidgetWrapper = styled(LinearGradient).attrs({
-  colors: [info, primary],
-})`
+export const WeatherWidgetWrapper = styled(LinearGradient)`
+  position: absolute;
+  bottom: 24px;
+  align-self: center;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 90%;
   padding: 8px 24px;
+  border-radius: 36px;
   background-color: ${primary};
+  opacity: 0.85;
 `;
 
 export const MainInfo = styled.View`
@@ -18,9 +21,22 @@ export const MainInfo = styled.View`
   justify-content: space-between;
 `;
 
+export const MainInfoIcon = styled.View`
+  width: 160px;
+  height: 160px;
+`;
+
 export const MainInfoTexts = styled.View`
   flex-direction: column;
   align-items: flex-start;
+`;
+
+export const City = styled.Text`
+  color: ${white};
+  font-size: 18px;
+  line-height: 18px;
+  margin-bottom: 8px;
+  max-width: 120px;
 `;
 
 export const Temperature = styled.Text`
@@ -31,8 +47,10 @@ export const Temperature = styled.Text`
 
 export const Description = styled.Text`
   color: ${white};
-  font-size: 18px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: 16px;
+  max-width: 120px;
+  margin-bottom: 8px;
 `;
 
 export const LargeIcon = styled.Image`

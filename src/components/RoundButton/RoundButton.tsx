@@ -2,18 +2,23 @@ import React from 'react';
 import {RoundButtonHolder, IconImage} from './styles';
 
 interface RoundButtonProps {
-  iconName?: 'menu' | 'crosshair';
+  theme: 'dark' | 'light';
+  iconName?: 'menu' | 'crosshair' | 'reload';
   onPress: () => void;
   borderRadius?: number;
 }
 
 export default function ({
+  theme = 'light',
   iconName = 'menu',
   onPress,
   borderRadius,
 }: RoundButtonProps) {
   return (
-    <RoundButtonHolder onPress={onPress} borderRadius={borderRadius}>
+    <RoundButtonHolder
+      theme={theme}
+      borderRadius={borderRadius}
+      onPress={onPress}>
       {iconName === 'menu' ? (
         <IconImage
           resizeMode="center"
@@ -24,6 +29,12 @@ export default function ({
         <IconImage
           resizeMode="center"
           source={require('@assets/icons/crosshair.png')}
+        />
+      ) : null}
+      {iconName === 'reload' ? (
+        <IconImage
+          resizeMode="center"
+          source={require('@assets/icons/reload.png')}
         />
       ) : null}
     </RoundButtonHolder>

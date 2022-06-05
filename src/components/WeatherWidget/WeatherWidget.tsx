@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
 import {Animated, Easing} from 'react-native';
+import {grey1000, grey700, info, primary} from '../../constants/colors';
 import WeatherIcon from '../WeatherIcon';
 import {
   WeatherWidgetWrapper,
+  City,
   Temperature,
   AsideInfo,
   MainInfo,
+  MainInfoIcon,
   AsideInfoIcon,
   AsideInfoTitle,
   AsideInfoDescription,
@@ -15,7 +18,10 @@ import {
 } from './styles';
 
 interface WeatherWidgetProps {
+  theme: 'dark' | 'light';
+  currentTime: 'night' | 'day';
   weatherCode: number;
+  cityName: string;
   temperature: number;
   description: string;
   humidity: number;
@@ -24,7 +30,10 @@ interface WeatherWidgetProps {
 }
 
 export default function ({
+  theme,
+  currentTime,
   weatherCode,
+  cityName,
   temperature,
   description,
   humidity,
@@ -60,17 +69,21 @@ export default function ({
     });
   }, [verticalVal]);
   return (
-    <WeatherWidgetWrapper>
+    <WeatherWidgetWrapper
+      colors={theme === 'dark' ? [grey700, grey1000] : [info, primary]}>
       <MainInfo>
         <Animated.View
           style={{
             transform: [{translateY: verticalVal}],
           }}>
-          <WeatherIcon iconCode={weatherCode} theme="day" />
+          <MainInfoIcon>
+            <WeatherIcon iconCode={weatherCode} theme={currentTime} />
+          </MainInfoIcon>
         </Animated.View>
         <MainInfoTexts>
+          <City numberOfLines={1}>{cityName}</City>
           <Temperature>{Math.round(temperature)}º</Temperature>
-          <Description>{description}</Description>
+          <Description numberOfLines={2}>{description}</Description>
         </MainInfoTexts>
       </MainInfo>
 

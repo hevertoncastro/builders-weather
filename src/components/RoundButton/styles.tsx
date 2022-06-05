@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
-import {white} from '../../constants/colors';
+import {grey700, white} from '../../constants/colors';
 
 interface RoundButtonProps {
+  theme: 'dark' | 'light';
   borderRadius?: number;
 }
 
@@ -11,7 +12,12 @@ export const RoundButtonHolder = styled.TouchableOpacity.attrs({
   align-items: center;
   justify-content: center;
   padding: 8px;
-  background-color: ${white};
+
+  ${({theme}) =>
+    theme === 'dark'
+      ? `background-color: ${grey700};`
+      : `background-color: ${white};`}
+
   width: 48px;
   height: 48px;
   ${({borderRadius}) =>

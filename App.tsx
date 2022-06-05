@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   StatusBar,
   useColorScheme,
-  Button,
   PermissionsAndroid,
   Alert,
   Linking,
@@ -125,6 +124,18 @@ const App = () => {
     );
   };
 
+  const getDayAndNightTheme = (
+    localTime: number,
+    sunriseTime: number,
+    sunsetTime: number,
+  ) => {
+    if (localTime >= sunriseTime && localTime < sunsetTime) {
+      return 'day';
+    } else {
+      return 'night';
+    }
+  };
+
   const getWeatherData = async (
     currentLatitude: number,
     currentLongitude: number,
@@ -158,24 +169,38 @@ const App = () => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
       <Header>
         <RoundButton
+          theme={isDarkMode ? 'dark' : 'light'}
           iconName="menu"
           borderRadius={12}
           onPress={() => {
-            setLatitude(0);
-            setLongitude(0);
+            // @TODO: Add menu
           }}
         />
-        <RoundButton iconName="crosshair" onPress={getDeviceCurrentLocation} />
+        {/* <RoundButton
+          theme={isDarkMode ? 'dark' : 'light'}
+          iconName="crosshair"
+          onPress={() => {
+            getDeviceCurrentLocation();
+          }}
+        /> */}
+        <RoundButton
+          theme={isDarkMode ? 'dark' : 'light'}
+          iconName="reload"
+          onPress={() => {
+            handleMapLocationChange(latitude, longitude);
+          }}
+        />
       </Header>
       <MapView
+        theme={isDarkMode ? 'dark' : 'light'}
         latitude={latitude}
         longitude={longitude}
         onChangeLocation={handleMapLocationChange}
       />
-      <GooglePlacesAutocomplete
+      {/* <GooglePlacesAutocomplete
         placeholder="Search"
         // GooglePlacesDetailsQuery={{fields: 'geometry'}}
         fetchDetails={true}
@@ -186,10 +211,17 @@ const App = () => {
           key: 'API_KEY',
           language: 'pt_BR',
         }}
-      />
+      /> */}
       {weatherData ? (
         <WeatherWidget
+          theme={isDarkMode ? 'dark' : 'light'}
+          currentTime={getDayAndNightTheme(
+            weatherData.dt,
+            weatherData.sys.sunrise,
+            weatherData.sys.sunset,
+          )}
           weatherCode={weatherData?.weather?.[0]?.id}
+          cityName={weatherData?.name}
           temperature={weatherData?.main?.temp}
           description={weatherData?.weather?.[0]?.description}
           humidity={weatherData?.main?.humidity}
