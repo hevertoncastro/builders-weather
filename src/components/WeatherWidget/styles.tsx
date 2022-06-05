@@ -33,8 +33,8 @@ export const MainInfoTexts = styled.View`
 
 export const City = styled.Text`
   color: ${white};
-  font-size: 18px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: 16px;
   margin-bottom: 8px;
   max-width: 120px;
 `;
@@ -51,6 +51,7 @@ export const Description = styled.Text`
   line-height: 16px;
   max-width: 120px;
   margin-bottom: 8px;
+  text-transform: capitalize;
 `;
 
 export const LargeIcon = styled.Image`

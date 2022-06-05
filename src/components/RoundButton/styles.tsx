@@ -25,6 +25,6 @@ export const RoundButtonHolder = styled.TouchableOpacity.attrs({
 `;
 
 export const IconImage = styled.Image`
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 `;

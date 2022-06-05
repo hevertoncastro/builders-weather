@@ -1,9 +1,9 @@
 import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import RNMapView from 'react-native-maps';
-import {darkTheme, lightTheme} from './src/constants/maps';
-import config from './src/constants/config';
-import {black, white, primary} from './src/constants/colors';
+import {darkTheme, lightTheme} from '../../constants/maps';
+import config from '../../constants/config';
+import {black, white, primary} from '../../constants/colors';
 
 interface MapViewProps {
   theme: 'dark' | 'light';
@@ -21,7 +21,13 @@ const MapView = ({
   const mapRef = useRef(null);
 
   useEffect(() => {
-    if (latitude && longitude && mapRef.current) {
+    if (
+      latitude &&
+      longitude &&
+      latitude !== config.INITIAL_LATITUDE &&
+      longitude !== config.INITIAL_LONGITUDE &&
+      mapRef.current
+    ) {
       mapRef.current!.animateCamera({
         center: {
           latitude: latitude,

@@ -22,6 +22,7 @@
           "@constants": "./src/constants",
           "@hooks": "./src/hooks",
           "@services": "./src/services",
+          "@stacks": "./src/stacks",
           "@styles": "./src/styles",
           "~types": "./src/types",
           "@utils": "./src/utils",

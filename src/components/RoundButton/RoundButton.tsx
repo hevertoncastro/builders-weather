@@ -3,7 +3,7 @@ import {RoundButtonHolder, IconImage} from './styles';
 
 interface RoundButtonProps {
   theme: 'dark' | 'light';
-  iconName?: 'menu' | 'crosshair' | 'reload';
+  iconName?: 'menu' | 'crosshair' | 'reload' | 'back';
   onPress: () => void;
   borderRadius?: number;
 }
@@ -35,6 +35,12 @@ export default function ({
         <IconImage
           resizeMode="center"
           source={require('@assets/icons/reload.png')}
+        />
+      ) : null}
+      {iconName === 'back' ? (
+        <IconImage
+          resizeMode="center"
+          source={require('@assets/icons/back.png')}
         />
       ) : null}
     </RoundButtonHolder>

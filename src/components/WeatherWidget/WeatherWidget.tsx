@@ -81,37 +81,43 @@ export default function ({
           </MainInfoIcon>
         </Animated.View>
         <MainInfoTexts>
-          <City numberOfLines={1}>{cityName}</City>
+          {cityName ? <City numberOfLines={1}>{cityName}</City> : null}
           <Temperature>{Math.round(temperature)}º</Temperature>
           <Description numberOfLines={2}>{description}</Description>
         </MainInfoTexts>
       </MainInfo>
 
       <AsideInfo>
-        <AsideInfoHolder>
-          <AsideInfoIcon
-            resizeMode="center"
-            source={require('@assets/icons/humidity.png')}
-          />
-          <AsideInfoTitle>{humidity}%</AsideInfoTitle>
-          <AsideInfoDescription>Humidity</AsideInfoDescription>
-        </AsideInfoHolder>
-        <AsideInfoHolder>
-          <AsideInfoIcon
-            resizeMode="center"
-            source={require('@assets/icons/wind.png')}
-          />
-          <AsideInfoTitle>{wind}m/s</AsideInfoTitle>
-          <AsideInfoDescription>Wind</AsideInfoDescription>
-        </AsideInfoHolder>
-        <AsideInfoHolder>
-          <AsideInfoIcon
-            resizeMode="center"
-            source={require('@assets/icons/visibility.png')}
-          />
-          <AsideInfoTitle>{Math.round(visibility / 1000)}km</AsideInfoTitle>
-          <AsideInfoDescription>Visibility</AsideInfoDescription>
-        </AsideInfoHolder>
+        {humidity ? (
+          <AsideInfoHolder>
+            <AsideInfoIcon
+              resizeMode="center"
+              source={require('@assets/icons/humidity.png')}
+            />
+            <AsideInfoTitle>{humidity}%</AsideInfoTitle>
+            <AsideInfoDescription>Humidity</AsideInfoDescription>
+          </AsideInfoHolder>
+        ) : null}
+        {wind ? (
+          <AsideInfoHolder>
+            <AsideInfoIcon
+              resizeMode="center"
+              source={require('@assets/icons/wind.png')}
+            />
+            <AsideInfoTitle>{wind}m/s</AsideInfoTitle>
+            <AsideInfoDescription>Wind</AsideInfoDescription>
+          </AsideInfoHolder>
+        ) : null}
+        {visibility ? (
+          <AsideInfoHolder>
+            <AsideInfoIcon
+              resizeMode="center"
+              source={require('@assets/icons/visibility.png')}
+            />
+            <AsideInfoTitle>{Math.round(visibility / 1000)}km</AsideInfoTitle>
+            <AsideInfoDescription>Visibility</AsideInfoDescription>
+          </AsideInfoHolder>
+        ) : null}
       </AsideInfo>
     </WeatherWidgetWrapper>
   );

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -9,19 +9,28 @@ import {
   Platform,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MapView from './MapView';
-import config from './src/constants/config';
-import WeatherWidget from './src/components/WeatherWidget';
-import RoundButton from './src/components/RoundButton';
-import {WeatherApiResponseType} from './src/types/weather';
-import Header from './src/components/Header';
+import MapView from '../../components/MapView';
+import config from '../../constants/config';
+import WeatherWidget from '../../components/WeatherWidget';
+import RoundButton from '../../components/RoundButton';
+import {WeatherApiResponseType} from '../../types/weather';
+import Header from '../../components/Header';
+import SearchInput from '../../components/SearchInput';
 
-const App = () => {
+export default function ({navigation, route}) {
+  const {params}: any = route;
   const [latitude, setLatitude] = useState(config.INITIAL_LATITUDE);
   const [longitude, setLongitude] = useState(config.INITIAL_LONGITUDE);
+  const [userCityCode, setUserCityCode] = useState(0);
   const [weatherData, setWeatherData]: WeatherApiResponseType | undefined =
     useState(undefined);
+
+  useEffect(() => {
+    if (params?.latitude && params?.longitude) {
+      setLatitude(params?.latitude);
+      setLongitude(params?.longitude);
+    }
+  }, [params]);
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -60,7 +69,7 @@ const App = () => {
     return false;
   };
 
-  const hasLocationPermission = async () => {
+  const hasLocationPermission = useCallback(async () => {
     if (Platform.OS === 'ios') {
       const hasPermission = await hasPermissionIOS();
       return hasPermission;
@@ -93,9 +102,9 @@ const App = () => {
     }
 
     return false;
-  };
+  }, []);
 
-  const getDeviceCurrentLocation = async () => {
+  const getDeviceCurrentLocation = useCallback(async () => {
     const hasPermission = await hasLocationPermission();
 
     if (!hasPermission) {
@@ -122,7 +131,7 @@ const App = () => {
         enableHighAccuracy: false,
       },
     );
-  };
+  }, [hasLocationPermission]);
 
   const getDayAndNightTheme = (
     localTime: number,
@@ -136,6 +145,7 @@ const App = () => {
     }
   };
 
+  // @TODO: Separate to services
   const getWeatherData = async (
     currentLatitude: number,
     currentLongitude: number,
@@ -161,11 +171,21 @@ const App = () => {
     newLatitude: number,
     newLongitude: number,
   ) {
-    const weatherResponse = await getWeatherData(newLatitude, newLongitude);
+    const weatherResponse: WeatherApiResponseType = await getWeatherData(
+      newLatitude,
+      newLongitude,
+    );
     if (weatherResponse) {
       setWeatherData(weatherResponse);
+      if (weatherResponse.id !== userCityCode) {
+        setUserCityCode(weatherResponse.id);
+      }
     }
   }
+
+  useEffect(() => {
+    getDeviceCurrentLocation();
+  }, [getDeviceCurrentLocation]);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -174,9 +194,16 @@ const App = () => {
         <RoundButton
           theme={isDarkMode ? 'dark' : 'light'}
           iconName="menu"
-          borderRadius={12}
+          borderRadius={16}
           onPress={() => {
             // @TODO: Add menu
+          }}
+        />
+        <SearchInput
+          theme={isDarkMode ? 'dark' : 'light'}
+          cityName={weatherData?.name}
+          onPress={() => {
+            navigation.navigate('Search');
           }}
         />
         {/* <RoundButton
@@ -200,18 +227,6 @@ const App = () => {
         longitude={longitude}
         onChangeLocation={handleMapLocationChange}
       />
-      {/* <GooglePlacesAutocomplete
-        placeholder="Search"
-        // GooglePlacesDetailsQuery={{fields: 'geometry'}}
-        fetchDetails={true}
-        onPress={(data, details = null) => {
-          console.log(details?.geometry?.location);
-        }}
-        query={{
-          key: 'API_KEY',
-          language: 'pt_BR',
-        }}
-      /> */}
       {weatherData ? (
         <WeatherWidget
           theme={isDarkMode ? 'dark' : 'light'}
@@ -231,6 +246,4 @@ const App = () => {
       ) : null}
     </SafeAreaView>
   );
-};
-
-export default App;
+}
