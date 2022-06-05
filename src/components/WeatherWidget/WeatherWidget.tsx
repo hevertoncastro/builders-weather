@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {Animated, Easing} from 'react-native';
 import WeatherIcon from '../WeatherIcon';
 import {
   WeatherWidgetWrapper,
@@ -30,10 +31,43 @@ export default function ({
   wind,
   visibility,
 }: WeatherWidgetProps) {
+  const [verticalVal] = React.useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(verticalVal, {
+      toValue: -10,
+      duration: 2000,
+      easing: Easing.inOut(Easing.quad),
+      useNativeDriver: true,
+    }).start();
+
+    verticalVal.addListener(({value}) => {
+      if (value === -10) {
+        Animated.timing(verticalVal, {
+          toValue: 0,
+          duration: 2000,
+          easing: Easing.inOut(Easing.quad),
+          useNativeDriver: true,
+        }).start();
+      } else if (value === 0) {
+        Animated.timing(verticalVal, {
+          toValue: -10,
+          duration: 2000,
+          easing: Easing.inOut(Easing.quad),
+          useNativeDriver: true,
+        }).start();
+      }
+    });
+  }, [verticalVal]);
   return (
     <WeatherWidgetWrapper>
       <MainInfo>
-        <WeatherIcon iconCode={weatherCode} theme="day" />
+        <Animated.View
+          style={{
+            transform: [{translateY: verticalVal}],
+          }}>
+          <WeatherIcon iconCode={weatherCode} theme="day" />
+        </Animated.View>
         <MainInfoTexts>
           <Temperature>{Math.round(temperature)}º</Temperature>
           <Description>{description}</Description>
