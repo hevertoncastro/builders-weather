@@ -10,6 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import MapView from './MapView';
 import config from './src/constants/config';
 import WeatherWidget from './src/components/WeatherWidget';
@@ -159,13 +160,32 @@ const App = () => {
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Header>
-        <RoundButton iconName="menu" borderRadius={12} onPress={() => {}} />
+        <RoundButton
+          iconName="menu"
+          borderRadius={12}
+          onPress={() => {
+            setLatitude(0);
+            setLongitude(0);
+          }}
+        />
         <RoundButton iconName="crosshair" onPress={getDeviceCurrentLocation} />
       </Header>
       <MapView
         latitude={latitude}
         longitude={longitude}
         onChangeLocation={handleMapLocationChange}
+      />
+      <GooglePlacesAutocomplete
+        placeholder="Search"
+        // GooglePlacesDetailsQuery={{fields: 'geometry'}}
+        fetchDetails={true}
+        onPress={(data, details = null) => {
+          console.log(details?.geometry?.location);
+        }}
+        query={{
+          key: 'API_KEY',
+          language: 'pt_BR',
+        }}
       />
       {weatherData ? (
         <WeatherWidget
