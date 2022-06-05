@@ -13,7 +13,9 @@ import Geolocation from 'react-native-geolocation-service';
 import MapView from './MapView';
 import config from './src/constants/config';
 import WeatherWidget from './src/components/WeatherWidget';
+import RoundButton from './src/components/RoundButton';
 import {WeatherApiResponseType} from './src/types/weather';
+import Header from './src/components/Header';
 
 const App = () => {
   const [latitude, setLatitude] = useState(config.INITIAL_LATITUDE);
@@ -156,6 +158,15 @@ const App = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Header>
+        <RoundButton iconName="menu" borderRadius={12} onPress={() => {}} />
+        <RoundButton iconName="crosshair" onPress={getDeviceCurrentLocation} />
+      </Header>
+      <MapView
+        latitude={latitude}
+        longitude={longitude}
+        onChangeLocation={handleMapLocationChange}
+      />
       {weatherData ? (
         <WeatherWidget
           weatherCode={weatherData?.weather?.[0]?.id}
@@ -166,15 +177,6 @@ const App = () => {
           visibility={weatherData?.visibility}
         />
       ) : null}
-      <Button
-        title="Get Current Device Location"
-        onPress={getDeviceCurrentLocation}
-      />
-      <MapView
-        latitude={latitude}
-        longitude={longitude}
-        onChangeLocation={handleMapLocationChange}
-      />
     </SafeAreaView>
   );
 };
