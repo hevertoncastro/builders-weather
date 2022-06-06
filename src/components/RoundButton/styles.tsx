@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {grey700, white} from '../../constants/colors';
+import {grey700, white} from '@constants/colors';
 
 interface RoundButtonProps {
   theme: 'dark' | 'light';

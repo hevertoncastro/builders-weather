@@ -8,29 +8,24 @@ import {
   Linking,
   Platform,
 } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
-import MapView from '../../components/MapView';
-import config from '../../constants/config';
-import WeatherWidget from '../../components/WeatherWidget';
-import RoundButton from '../../components/RoundButton';
-import {WeatherApiResponseType} from '../../types/weather';
-import Header from '../../components/Header';
-import SearchInput from '../../components/SearchInput';
+import MapView from '@components/MapView';
+import WeatherWidget from '@components/WeatherWidget';
+import RoundButton from '@components/RoundButton';
+import Header from '@components/Header';
+import SearchInput from '@components/SearchInput';
+import {WeatherApiResponseType} from '@types/weather';
+import config from '@constants/config';
 
 export default function ({navigation, route}) {
   const {params}: any = route;
-  const [latitude, setLatitude] = useState(config.INITIAL_LATITUDE);
-  const [longitude, setLongitude] = useState(config.INITIAL_LONGITUDE);
-  const [userCityCode, setUserCityCode] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [hasDragMap, setHasDragMap] = useState(false);
   const [weatherData, setWeatherData]: WeatherApiResponseType | undefined =
     useState(undefined);
-
-  useEffect(() => {
-    if (params?.latitude && params?.longitude) {
-      setLatitude(params?.latitude);
-      setLongitude(params?.longitude);
-    }
-  }, [params]);
+  const [loading, setLoading] = useState(true);
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -39,6 +34,7 @@ export default function ({navigation, route}) {
     backgroundColor: 'white',
   };
 
+  // @TODO: Separate to a util
   const hasPermissionIOS = async () => {
     const openSetting = () => {
       Linking.openSettings().catch(() => {
@@ -69,6 +65,7 @@ export default function ({navigation, route}) {
     return false;
   };
 
+  // @TODO: Separate to a util
   const hasLocationPermission = useCallback(async () => {
     if (Platform.OS === 'ios') {
       const hasPermission = await hasPermissionIOS();
@@ -104,6 +101,7 @@ export default function ({navigation, route}) {
     return false;
   }, []);
 
+  // @TODO: Separate to a util
   const getDeviceCurrentLocation = useCallback(async () => {
     const hasPermission = await hasLocationPermission();
 
@@ -133,6 +131,7 @@ export default function ({navigation, route}) {
     );
   }, [hasLocationPermission]);
 
+  // @TODO: Separate to a util
   const getDayAndNightTheme = (
     localTime: number,
     sunriseTime: number,
@@ -162,7 +161,8 @@ export default function ({navigation, route}) {
         return response.json();
       })
       .then(data => {
-        console.log('weather', JSON.stringify(data, null, 2));
+        console.log('weather', data.name);
+        // console.log('weather', JSON.stringify(data, null, 2));
         return data;
       });
   };
@@ -170,6 +170,7 @@ export default function ({navigation, route}) {
   async function handleMapLocationChange(
     newLatitude: number,
     newLongitude: number,
+    isGesture: boolean | undefined,
   ) {
     const weatherResponse: WeatherApiResponseType = await getWeatherData(
       newLatitude,
@@ -177,15 +178,32 @@ export default function ({navigation, route}) {
     );
     if (weatherResponse) {
       setWeatherData(weatherResponse);
-      if (weatherResponse.id !== userCityCode) {
-        setUserCityCode(weatherResponse.id);
-      }
     }
+    console.log('isGesture', isGesture);
   }
 
   useEffect(() => {
+    console.log('useEffect params');
+    if (params?.latitude && params?.longitude) {
+      console.log('useEffect params', params?.latitude, params?.longitude);
+      setLatitude(params?.latitude);
+      setLongitude(params?.longitude);
+    }
+  }, [params]);
+
+  useEffect(() => {
+    // @TODO: Redundant code
     getDeviceCurrentLocation();
   }, [getDeviceCurrentLocation]);
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.log('useFocusEffect');
+  //     return () => {
+  //       console.log('useFocusEffect clear');
+  //     };
+  //   }, []),
+  // );
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -217,7 +235,7 @@ export default function ({navigation, route}) {
           theme={isDarkMode ? 'dark' : 'light'}
           iconName="reload"
           onPress={() => {
-            handleMapLocationChange(latitude, longitude);
+            handleMapLocationChange(latitude, longitude, false);
           }}
         />
       </Header>

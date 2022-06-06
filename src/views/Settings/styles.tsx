@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {grey200, grey800} from '../../constants/colors';
+import {grey200, grey800} from '@constants/colors';
 
 interface SettingsProps {
   theme: 'dark' | 'light';

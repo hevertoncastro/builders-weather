@@ -9,8 +9,8 @@ export default {
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`,
 
   // MAPS
-  INITIAL_LATITUDE: -20.5416,
-  INITIAL_LONGITUDE: -47.4041,
+  INITIAL_LATITUDE: 0,
+  INITIAL_LONGITUDE: 0,
   ZOOM: 12,
   HEADING: 0,
   PITCH: 0,

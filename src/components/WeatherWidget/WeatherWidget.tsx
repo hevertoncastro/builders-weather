@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Animated, Easing} from 'react-native';
-import {grey1000, grey700, info, primary} from '../../constants/colors';
+import {grey1000, grey700, info, primary} from '@constants/colors';
 import WeatherIcon from '../WeatherIcon';
 import {
   WeatherWidgetWrapper,

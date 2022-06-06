@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../../constants/config';
+import config from '@constants/config';
 import {LargeIcon} from './styles';
 
 interface WeatherIconProps {

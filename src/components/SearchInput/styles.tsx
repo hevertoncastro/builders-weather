@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {grey700, grey800, white} from '../../constants/colors';
+import {grey700, grey800, white} from '@constants/colors';
 
 interface SearchInputProps {
   theme: 'dark' | 'light';

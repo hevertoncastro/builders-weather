@@ -1,15 +1,19 @@
 import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import RNMapView from 'react-native-maps';
-import {darkTheme, lightTheme} from '../../constants/maps';
-import config from '../../constants/config';
-import {black, white, primary} from '../../constants/colors';
+import {darkTheme, lightTheme} from '@constants/maps';
+import config from '@constants/config';
+import {black, white, primary} from '@constants/colors';
 
 interface MapViewProps {
   theme: 'dark' | 'light';
   latitude: number;
   longitude: number;
-  onChangeLocation: (newLatitude: number, newLongitude: number) => void;
+  onChangeLocation: (
+    newLatitude: number,
+    newLongitude: number,
+    isGesture: boolean | undefined,
+  ) => void;
 }
 
 const MapView = ({
@@ -38,6 +42,7 @@ const MapView = ({
         altitude: config.ALTITUDE,
         zoom: config.ZOOM,
       });
+      console.log('animateCamera');
     }
   }, [latitude, longitude]);
 
@@ -63,8 +68,12 @@ const MapView = ({
         loadingBackgroundColor={theme === 'dark' ? black : white}
         style={StyleSheet.absoluteFillObject}
         rotateEnabled={false}
-        onRegionChangeComplete={region => {
-          onChangeLocation(region.latitude, region.longitude);
+        onRegionChangeComplete={(region, isGesture) => {
+          onChangeLocation(
+            region.latitude,
+            region.longitude,
+            isGesture?.isGesture,
+          );
         }}
       />
     </View>

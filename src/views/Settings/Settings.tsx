@@ -3,8 +3,8 @@ import {StatusBar, useColorScheme} from 'react-native';
 
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
-import Header from '../../components/Header';
-import RoundButton from '../../components/RoundButton';
+import Header from '@components/Header';
+import RoundButton from '@components/RoundButton';
 import {SettingsContainer} from './styles';
 
 export default function ({navigation}) {

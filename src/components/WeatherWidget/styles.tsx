@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {info, primary, white} from '../../constants/colors';
+import {info, primary, white} from '@constants/colors';
 
 export const WeatherWidgetWrapper = styled(LinearGradient)`
   position: absolute;
