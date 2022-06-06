@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
-import {Animated, Easing} from 'react-native';
+import React from 'react';
+import {Animated} from 'react-native';
+import {useBounceAnimation} from '@hooks/useBounceAnimation';
 import {grey1000, grey700, info, primary} from '@constants/colors';
 import WeatherIcon from '../WeatherIcon';
 import {
@@ -40,34 +41,8 @@ export default function ({
   wind,
   visibility,
 }: WeatherWidgetProps) {
-  const [verticalVal] = React.useState(new Animated.Value(0));
+  const verticalVal = useBounceAnimation();
 
-  useEffect(() => {
-    Animated.timing(verticalVal, {
-      toValue: -10,
-      duration: 2000,
-      easing: Easing.inOut(Easing.quad),
-      useNativeDriver: true,
-    }).start();
-
-    verticalVal.addListener(({value}) => {
-      if (value === -10) {
-        Animated.timing(verticalVal, {
-          toValue: 0,
-          duration: 2000,
-          easing: Easing.inOut(Easing.quad),
-          useNativeDriver: true,
-        }).start();
-      } else if (value === 0) {
-        Animated.timing(verticalVal, {
-          toValue: -10,
-          duration: 2000,
-          easing: Easing.inOut(Easing.quad),
-          useNativeDriver: true,
-        }).start();
-      }
-    });
-  }, [verticalVal]);
   return (
     <WeatherWidgetWrapper
       colors={theme === 'dark' ? [grey700, grey1000] : [info, primary]}>
