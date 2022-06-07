@@ -1,18 +1,22 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
-import {Dimensions, StatusBar, StyleSheet, useColorScheme} from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-import {setLanguage, setUnits} from '@redux/actions/settings';
+import {useDispatch, useSelector} from 'react-redux';
+import {StatusBar} from 'react-native';
+import {setLanguage, setThemes, setUnits} from '@redux/actions/settings';
 import RoundButton from '@components/RoundButton';
 import {SearchContainer, SearchHeaderTitle} from './styles';
 import Select from '@components/Select';
 import Header from '@components/Header';
-import Config from 'react-native-config';
+import {useUserColorScheme} from '@hooks/useUserColorScheme';
+import constants from '@constants/index';
+import {RootState} from '~types/store';
+import {LanguagesType, ThemeType, UnitsType} from '~types/settings';
 
 const languages = [
   {label: 'Português', value: 'pt_br'},
   {label: 'English', value: 'en'},
   {label: 'Espanhol', value: 'es'},
+  {label: 'Ukrainian', value: 'ua'},
+  {label: 'Chinese', value: 'zh_cn'},
 ];
 
 const units = [
@@ -20,8 +24,20 @@ const units = [
   {label: 'Imperial', value: 'imperial'},
 ];
 
+const themes = [
+  {label: 'Light', value: 'light'},
+  {label: 'Dark', value: 'dark'},
+  {label: 'System', value: 'system'},
+];
+
 export default function ({navigation}) {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {colorScheme, isDarkMode} = useUserColorScheme();
+  const language =
+    useSelector((state: RootState) => state.settings.language) || 'pt_br';
+  const unit =
+    useSelector((state: RootState) => state.settings.units) || 'metric';
+  const theme =
+    useSelector((state: RootState) => state.settings.theme) || 'system';
   const dispatch = useDispatch();
 
   return (
@@ -33,35 +49,45 @@ export default function ({navigation}) {
           iconName="back"
           borderRadius={12}
           onPress={() => {
-            navigation.goBack();
+            navigation.navigate('Home', {
+              from: 'Settings',
+            });
           }}
         />
-        <SearchHeaderTitle>Settings</SearchHeaderTitle>
+        <SearchHeaderTitle>
+          {constants.TEXTS[language].SETTINGS_TITLE}
+        </SearchHeaderTitle>
       </Header>
       <Select
-        label="Idioma"
-        placeholder="Selecione o idioma"
-        items={languages.map(language => language.label)}
+        theme={colorScheme}
+        label={`🌎 ${constants.TEXTS[language].SETTINGS_LANGUAGE_LABEL}`}
+        placeholder={languages.find(l => l.value === language)?.label}
+        items={languages.map(l => l.label)}
         onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-          dispatch(setLanguage(languages[index].value));
+          dispatch(setLanguage(languages[index].value as LanguagesType) as any);
         }}
       />
       <Select
-        label="Unidade de medida"
-        placeholder="Selecione a unidade"
-        items={units.map(language => language.label)}
+        theme={colorScheme}
+        label={`📏 ${constants.TEXTS[language].SETTINGS_UNITS_LABEL}`}
+        placeholder={constants.TEXTS[language][unit]}
+        items={units.map(t => {
+          return constants.TEXTS[language][t?.value] ?? t?.label;
+        })}
         onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-          dispatch(setUnits(units[index].value));
+          dispatch(setUnits(units[index].value as UnitsType) as any);
         }}
       />
+
       <Select
-        label="Tema"
-        placeholder="Selecione o tema"
-        items={['Claro', 'Escuro', 'Sistema']}
+        theme={colorScheme}
+        label={`🎨 ${constants.TEXTS[language].SETTINGS_THEME_LABEL}`}
+        placeholder={constants.TEXTS[language][theme]}
+        items={themes.map(t => {
+          return constants.TEXTS[language][t?.value] ?? t?.label;
+        })}
         onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
+          dispatch(setThemes(themes[index].value as ThemeType) as any);
         }}
       />
     </SearchContainer>

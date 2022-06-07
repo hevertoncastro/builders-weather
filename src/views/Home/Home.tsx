@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   StatusBar,
-  useColorScheme,
   PermissionsAndroid,
   Alert,
   Linking,
@@ -16,6 +15,7 @@ import WeatherWidget from '@components/WeatherWidget';
 import RoundButton from '@components/RoundButton';
 import Header from '@components/Header';
 import SearchInput from '@components/SearchInput';
+import {useUserColorScheme} from '@hooks/useUserColorScheme';
 import {WeatherApiResponseType} from '@types/weather';
 import constants from '@constants/index';
 import {RootState} from '~types/store';
@@ -25,16 +25,13 @@ export default function ({navigation, route}) {
   const {params}: any = route;
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
-  const [hasDragMap, setHasDragMap] = useState(false);
   const [weatherData, setWeatherData]: WeatherApiResponseType | undefined =
     useState(undefined);
-  const [loading, setLoading] = useState(true);
-
+  const {colorScheme, isDarkMode} = useUserColorScheme();
   const language =
     useSelector((state: RootState) => state.settings.language) || 'pt_br';
   const units =
     useSelector((state: RootState) => state.settings.units) || 'metric';
-  const isDarkMode = useColorScheme() === 'dark';
 
   // @TODO: Separate to a util
   const hasPermissionIOS = async () => {
@@ -147,52 +144,56 @@ export default function ({navigation, route}) {
   };
 
   // @TODO: Separate to services
-  const getWeatherData = async (
-    currentLatitude: number,
-    currentLongitude: number,
-  ) => {
-    return await fetch(
-      constants.WEATHER_API_BASE_URL(
-        currentLatitude,
-        currentLongitude,
-        units,
-        language,
-        `${Config.WEATHER_API_KEY}`,
-      ),
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        console.log('weather', data.name);
-        // console.log('weather', JSON.stringify(data, null, 2));
-        return data;
-      });
-  };
+  const getWeatherData = useCallback(
+    async (currentLatitude: number, currentLongitude: number) => {
+      return await fetch(
+        constants.WEATHER_API_BASE_URL(
+          currentLatitude,
+          currentLongitude,
+          units,
+          language,
+          `${Config.WEATHER_API_KEY}`,
+        ),
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          console.log('weather', data.name);
+          // console.log('weather', JSON.stringify(data, null, 2));
+          return data;
+        });
+    },
+    [language, units],
+  );
 
-  async function handleMapLocationChange(
-    newLatitude: number,
-    newLongitude: number,
-    isGesture: boolean | undefined,
-  ) {
-    const weatherResponse: WeatherApiResponseType = await getWeatherData(
-      newLatitude,
-      newLongitude,
-    );
-    if (weatherResponse) {
-      setWeatherData(weatherResponse);
-    }
-    console.log('isGesture', isGesture);
-  }
+  const handleMapLocationChange = useCallback(
+    async (
+      newLatitude: number,
+      newLongitude: number,
+      isGesture: boolean | undefined,
+    ) => {
+      const weatherResponse: WeatherApiResponseType = await getWeatherData(
+        newLatitude,
+        newLongitude,
+      );
+      if (weatherResponse) {
+        setWeatherData(weatherResponse);
+      }
+      console.log('isGesture', isGesture);
+    },
+    [getWeatherData],
+  );
 
   useEffect(() => {
-    console.log('useEffect params');
     if (params?.latitude && params?.longitude) {
-      console.log('useEffect params', params?.latitude, params?.longitude);
       setLatitude(params?.latitude);
       setLongitude(params?.longitude);
     }
-  }, [params]);
+    if (params?.from === 'Settings') {
+      handleMapLocationChange(latitude, longitude, false);
+    }
+  }, [params, handleMapLocationChange, latitude, longitude]);
 
   useEffect(() => {
     // @TODO: Redundant code
@@ -213,7 +214,7 @@ export default function ({navigation, route}) {
       <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
       <Header absolute>
         <RoundButton
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={colorScheme}
           iconName="menu"
           borderRadius={16}
           onPress={() => {
@@ -221,21 +222,21 @@ export default function ({navigation, route}) {
           }}
         />
         <SearchInput
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={colorScheme}
           cityName={weatherData?.name}
           onPress={() => {
             navigation.navigate('Search');
           }}
         />
         {/* <RoundButton
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={colorScheme}
           iconName="crosshair"
           onPress={() => {
             getDeviceCurrentLocation();
           }}
         /> */}
         <RoundButton
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={colorScheme}
           iconName="reload"
           onPress={() => {
             handleMapLocationChange(latitude, longitude, false);
@@ -243,22 +244,21 @@ export default function ({navigation, route}) {
         />
       </Header>
       <MapView
-        theme={isDarkMode ? 'dark' : 'light'}
+        theme={colorScheme}
         latitude={latitude}
         longitude={longitude}
         onChangeLocation={handleMapLocationChange}
       />
       {weatherData ? (
         <WeatherWidget
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={colorScheme}
           currentTime={getDayAndNightTheme(
             weatherData.dt,
             weatherData.sys.sunrise,
             weatherData.sys.sunset,
           )}
           weatherCode={weatherData?.weather?.[0]?.id}
-          cityName={language}
-          // cityName={weatherData?.name}
+          cityName={weatherData?.name}
           temperature={weatherData?.main?.temp}
           description={weatherData?.weather?.[0]?.description}
           humidity={weatherData?.main?.humidity}

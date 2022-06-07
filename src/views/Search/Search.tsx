@@ -1,16 +1,23 @@
 import React from 'react';
-import {StatusBar, useColorScheme} from 'react-native';
+import {StatusBar} from 'react-native';
+import {useSelector} from 'react-redux';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Config from 'react-native-config';
 import RoundButton from '@components/RoundButton';
+import {useUserColorScheme} from '@hooks/useUserColorScheme';
 import {SearchContainer, SearchHeaderTitle} from './styles';
 import Header from '@components/Header';
+import constants from '@constants/index';
+import {RootState} from '~types/store';
+import {black, grey700, link, white} from '@constants/colors';
 
 export default function ({navigation}) {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {colorScheme, isDarkMode} = useUserColorScheme();
+  const language =
+    useSelector((state: RootState) => state.settings.language) || 'pt_br';
 
   return (
-    <SearchContainer theme={isDarkMode ? 'dark' : 'light'}>
+    <SearchContainer theme={colorScheme}>
       <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
       <Header justify="flex-start">
         <RoundButton
@@ -21,10 +28,12 @@ export default function ({navigation}) {
             navigation.goBack();
           }}
         />
-        <SearchHeaderTitle>Search new place</SearchHeaderTitle>
+        <SearchHeaderTitle>
+          {constants.TEXTS[language].SEARCH_TITLE}
+        </SearchHeaderTitle>
       </Header>
       <GooglePlacesAutocomplete
-        placeholder="Search"
+        placeholder={constants.TEXTS[language].SEARCH_PLACEHOLDER}
         textInputProps={{
           autoFocus: true,
         }}
@@ -36,17 +45,17 @@ export default function ({navigation}) {
           textInput: {
             marginTop: 24,
             height: 48,
-            color: isDarkMode ? '#ffffff' : '#000000',
-            backgroundColor: isDarkMode ? '#2e3041' : '#ffffff',
+            color: isDarkMode ? white : black,
+            backgroundColor: isDarkMode ? grey700 : white,
           },
           predefinedPlacesDescription: {
-            color: '#1faadb',
+            color: link,
           },
           row: {
-            backgroundColor: isDarkMode ? '#2e3041' : '#ffffff',
+            backgroundColor: isDarkMode ? grey700 : white,
           },
           description: {
-            color: isDarkMode ? '#ffffff' : '#000000',
+            color: isDarkMode ? white : black,
           },
         }}
         fetchDetails={true}

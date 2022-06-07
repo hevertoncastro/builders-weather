@@ -48,6 +48,8 @@ export default function ({
   const verticalVal = useBounceAnimation();
   const language =
     useSelector((state: RootState) => state.settings.language) || 'pt_br';
+  const unit =
+    useSelector((state: RootState) => state.settings.units) || 'metric';
 
   return (
     <WeatherWidgetWrapper
@@ -87,7 +89,10 @@ export default function ({
               resizeMode="center"
               source={require('@assets/icons/wind.png')}
             />
-            <AsideInfoTitle>{wind}m/s</AsideInfoTitle>
+            <AsideInfoTitle>
+              {wind}
+              {unit === 'metric' ? 'm/s' : 'm/h'}
+            </AsideInfoTitle>
             <AsideInfoDescription>
               {constants.TEXTS[language].WIND}
             </AsideInfoDescription>

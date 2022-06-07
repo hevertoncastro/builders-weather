@@ -24,6 +24,11 @@ function settingsReducer(state = initialState, action: Action) {
         ...state,
         units: action.payload as UnitsType,
       };
+    case 'SET_THEME':
+      return {
+        ...state,
+        theme: action.payload as ThemeType,
+      };
     default:
       return state;
   }

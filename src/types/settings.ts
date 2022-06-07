@@ -1,3 +1,3 @@
-export type LanguagesType = 'en' | 'pt_br' | 'es';
+export type LanguagesType = 'en' | 'pt_br' | 'es' | 'ua' | 'zh_cn';
 export type UnitsType = 'metric' | 'imperial';
 export type ThemeType = 'light' | 'dark' | 'system';
