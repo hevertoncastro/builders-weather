@@ -17,15 +17,6 @@ export const SearchContainer = styled.View<SearchProps>`
       : `background-color: ${grey200};`}
 `;
 
-export const SearchHeader = styled.View`
-  margin-top: 24px;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  width: 90%;
-  height: 48px;
-`;
-
 export const SearchHeaderTitle = styled.Text`
   color: ${primary};
   font-size: 20px;

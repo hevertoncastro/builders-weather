@@ -3,7 +3,8 @@ import {StatusBar, useColorScheme} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Config from 'react-native-config';
 import RoundButton from '@components/RoundButton';
-import {SearchContainer, SearchHeader, SearchHeaderTitle} from './styles';
+import {SearchContainer, SearchHeaderTitle} from './styles';
+import Header from '@components/Header';
 
 export default function ({navigation}) {
   const isDarkMode = useColorScheme() === 'dark';
@@ -11,7 +12,7 @@ export default function ({navigation}) {
   return (
     <SearchContainer theme={isDarkMode ? 'dark' : 'light'}>
       <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
-      <SearchHeader>
+      <Header justify="flex-start">
         <RoundButton
           theme={isDarkMode ? 'dark' : 'light'}
           iconName="back"
@@ -21,7 +22,7 @@ export default function ({navigation}) {
           }}
         />
         <SearchHeaderTitle>Search new place</SearchHeaderTitle>
-      </SearchHeader>
+      </Header>
       <GooglePlacesAutocomplete
         placeholder="Search"
         textInputProps={{

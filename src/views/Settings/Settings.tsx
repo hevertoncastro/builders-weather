@@ -1,19 +1,18 @@
 import React from 'react';
-import {StatusBar, useColorScheme} from 'react-native';
-
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-
-import Header from '@components/Header';
+import {Dimensions, StatusBar, StyleSheet, useColorScheme} from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
+import Config from 'react-native-config';
 import RoundButton from '@components/RoundButton';
-import {SettingsContainer} from './styles';
+import {SearchContainer, SearchHeaderTitle} from './styles';
+import Select from '@components/Select';
+import Header from '@components/Header';
 
 export default function ({navigation}) {
   const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SettingsContainer theme={isDarkMode ? 'dark' : 'light'}>
+    <SearchContainer theme={isDarkMode ? 'dark' : 'light'}>
       <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
-      <Header>
+      <Header justify="flex-start">
         <RoundButton
           theme={isDarkMode ? 'dark' : 'light'}
           iconName="back"
@@ -22,45 +21,32 @@ export default function ({navigation}) {
             navigation.goBack();
           }}
         />
+        <SearchHeaderTitle>Settings</SearchHeaderTitle>
       </Header>
-      <GooglePlacesAutocomplete
-        placeholder="Search"
-        textInputProps={{
-          autoFocus: true,
-        }}
-        styles={{
-          container: {
-            width: '90%',
-            alignSelf: 'center',
-          },
-          textInput: {
-            marginTop: 96,
-            height: 48,
-            color: isDarkMode ? '#ffffff' : '#000000',
-            backgroundColor: isDarkMode ? '#2e3041' : '#ffffff',
-          },
-          row: {
-            backgroundColor: isDarkMode ? '#2e3041' : '#ffffff',
-          },
-          description: {
-            color: isDarkMode ? '#ffffff' : '#000000',
-          },
-        }}
-        fetchDetails={true}
-        onPress={(data, details = null) => {
-          console.log(details?.geometry?.location);
-          if (details?.geometry?.location) {
-            navigation.navigate('Home', {
-              latitude: details?.geometry?.location?.lat,
-              longitude: details?.geometry?.location?.lng,
-            });
-          }
-        }}
-        query={{
-          key: 'AIzaSyBED9sj0n2PNbeeNEm87UqAhe7D4IhbeYA',
-          language: 'pt_BR',
+      <Select
+        label="Idioma"
+        placeholder="Selecione o idioma"
+        items={['Português', 'English', 'Espanhol']}
+        onSelect={(selectedItem, index) => {
+          console.log(selectedItem, index);
         }}
       />
-    </SettingsContainer>
+      <Select
+        label="Unidade de medida"
+        placeholder="Selecione o idioma"
+        items={['Métrica', 'Imperial']}
+        onSelect={(selectedItem, index) => {
+          console.log(selectedItem, index);
+        }}
+      />
+      <Select
+        label="Tema"
+        placeholder="Selecione o idioma"
+        items={['Claro', 'Escuro', 'Sistema']}
+        onSelect={(selectedItem, index) => {
+          console.log(selectedItem, index);
+        }}
+      />
+    </SearchContainer>
   );
 }

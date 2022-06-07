@@ -1,6 +1,19 @@
 import React, {PropsWithChildren} from 'react';
 import {CustomHeaderWrapper} from './styles';
 
-export default function ({children}: PropsWithChildren<any>) {
-  return <CustomHeaderWrapper>{children}</CustomHeaderWrapper>;
+interface HeaderProps extends PropsWithChildren<any> {
+  justify?: 'space-between' | 'center' | 'flex-start';
+  absolute?: boolean;
+}
+
+export default function ({
+  justify = 'space-between',
+  absolute = false,
+  children,
+}: HeaderProps) {
+  return (
+    <CustomHeaderWrapper justify={justify} absolute={absolute}>
+      {children}
+    </CustomHeaderWrapper>
+  );
 }

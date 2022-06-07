@@ -57,7 +57,6 @@ export default function ({
           </MainInfoIcon>
         </Animated.View>
         <MainInfoTexts>
-          <City>{Config.API_URL}</City>
           {cityName ? <City numberOfLines={1}>{cityName}</City> : null}
           <Temperature>{Math.round(temperature)}º</Temperature>
           <Description numberOfLines={2}>{description}</Description>

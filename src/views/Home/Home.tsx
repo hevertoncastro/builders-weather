@@ -155,6 +155,7 @@ export default function ({navigation, route}) {
         currentLatitude,
         currentLongitude,
         'metric',
+        'pt_br',
         `${Config.WEATHER_API_KEY}`,
       ),
     )
@@ -209,13 +210,13 @@ export default function ({navigation, route}) {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
-      <Header>
+      <Header absolute>
         <RoundButton
           theme={isDarkMode ? 'dark' : 'light'}
           iconName="menu"
           borderRadius={16}
           onPress={() => {
-            // @TODO: Add menu
+            navigation.navigate('Settings');
           }}
         />
         <SearchInput
