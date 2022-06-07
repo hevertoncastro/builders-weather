@@ -21,6 +21,7 @@
           "@components": "./src/components",
           "@constants": "./src/constants",
           "@hooks": "./src/hooks",
+          "@redux": "./src/redux",
           "@services": "./src/services",
           "@stacks": "./src/stacks",
           "@styles": "./src/styles",
