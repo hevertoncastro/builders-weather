@@ -8,7 +8,8 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import Config from 'react-native-config';
+// import {useFocusEffect} from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView from '@components/MapView';
 import WeatherWidget from '@components/WeatherWidget';
@@ -154,7 +155,7 @@ export default function ({navigation, route}) {
         currentLatitude,
         currentLongitude,
         'metric',
-        '0888efd93e546e0469e210d3cac65c00',
+        `${Config.WEATHER_API_KEY}`,
       ),
     )
       .then(response => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StatusBar, useColorScheme} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import Config from 'react-native-config';
 import RoundButton from '@components/RoundButton';
 import {SearchContainer, SearchHeader, SearchHeaderTitle} from './styles';
 
@@ -58,7 +59,7 @@ export default function ({navigation}) {
           }
         }}
         query={{
-          key: 'AIzaSyBED9sj0n2PNbeeNEm87UqAhe7D4IhbeYA',
+          key: `${Config.GOOGLE_PLACES_API_KEY}`,
           language: 'pt_BR',
         }}
       />

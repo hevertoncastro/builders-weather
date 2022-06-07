@@ -1,5 +1,6 @@
 import React from 'react';
 import {Animated} from 'react-native';
+import Config from 'react-native-config';
 import {useBounceAnimation} from '@hooks/useBounceAnimation';
 import {grey1000, grey700, info, primary} from '@constants/colors';
 import WeatherIcon from '../WeatherIcon';
@@ -56,6 +57,7 @@ export default function ({
           </MainInfoIcon>
         </Animated.View>
         <MainInfoTexts>
+          <City>{Config.API_URL}</City>
           {cityName ? <City numberOfLines={1}>{cityName}</City> : null}
           <Temperature>{Math.round(temperature)}º</Temperature>
           <Description numberOfLines={2}>{description}</Description>
