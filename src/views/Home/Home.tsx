@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
-  SafeAreaView,
   StatusBar,
   useColorScheme,
   PermissionsAndroid,
@@ -8,6 +7,7 @@ import {
   Linking,
   Platform,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import Config from 'react-native-config';
 // import {useFocusEffect} from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
@@ -17,7 +17,9 @@ import RoundButton from '@components/RoundButton';
 import Header from '@components/Header';
 import SearchInput from '@components/SearchInput';
 import {WeatherApiResponseType} from '@types/weather';
-import config from '@constants/config';
+import constants from '@constants/index';
+import {RootState} from '~types/store';
+import {HomeContainer} from './styles';
 
 export default function ({navigation, route}) {
   const {params}: any = route;
@@ -28,12 +30,11 @@ export default function ({navigation, route}) {
     useState(undefined);
   const [loading, setLoading] = useState(true);
 
+  const language =
+    useSelector((state: RootState) => state.settings.language) || 'pt_br';
+  const units =
+    useSelector((state: RootState) => state.settings.units) || 'metric';
   const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    flex: 1,
-    backgroundColor: 'white',
-  };
 
   // @TODO: Separate to a util
   const hasPermissionIOS = async () => {
@@ -116,8 +117,8 @@ export default function ({navigation, route}) {
         setLongitude(position.coords?.longitude);
       },
       error => {
-        setLatitude(config.INITIAL_LATITUDE);
-        setLongitude(config.INITIAL_LONGITUDE);
+        setLatitude(constants.INITIAL_LATITUDE);
+        setLongitude(constants.INITIAL_LONGITUDE);
         console.log(error);
       },
       {
@@ -151,11 +152,11 @@ export default function ({navigation, route}) {
     currentLongitude: number,
   ) => {
     return await fetch(
-      config.WEATHER_API_BASE_URL(
+      constants.WEATHER_API_BASE_URL(
         currentLatitude,
         currentLongitude,
-        'metric',
-        'pt_br',
+        units,
+        language,
         `${Config.WEATHER_API_KEY}`,
       ),
     )
@@ -208,7 +209,7 @@ export default function ({navigation, route}) {
   // );
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <HomeContainer>
       <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
       <Header absolute>
         <RoundButton
@@ -256,7 +257,8 @@ export default function ({navigation, route}) {
             weatherData.sys.sunset,
           )}
           weatherCode={weatherData?.weather?.[0]?.id}
-          cityName={weatherData?.name}
+          cityName={language}
+          // cityName={weatherData?.name}
           temperature={weatherData?.main?.temp}
           description={weatherData?.weather?.[0]?.description}
           humidity={weatherData?.main?.humidity}
@@ -264,6 +266,6 @@ export default function ({navigation, route}) {
           visibility={weatherData?.visibility}
         />
       ) : null}
-    </SafeAreaView>
+    </HomeContainer>
   );
 }

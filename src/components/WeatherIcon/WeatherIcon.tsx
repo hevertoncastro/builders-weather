@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '@constants/config';
+import constants from '@constants/index';
 import {LargeIcon} from './styles';
 
 interface WeatherIconProps {
@@ -8,9 +8,9 @@ interface WeatherIconProps {
 }
 
 export default function ({iconCode = 200, theme = 'day'}: WeatherIconProps) {
-  const iconSource = config.WEATHER_ICONS[iconCode]
-    ? config.WEATHER_ICONS[iconCode]
-    : config.WEATHER_ICONS[200];
+  const iconSource = constants.WEATHER_ICONS[iconCode]
+    ? constants.WEATHER_ICONS[iconCode]
+    : constants.WEATHER_ICONS[200];
 
   return (
     <LargeIcon

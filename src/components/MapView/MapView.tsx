@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import RNMapView from 'react-native-maps';
 import {darkTheme, lightTheme} from '@constants/maps';
-import config from '@constants/config';
+import constants from '@constants/index';
 import {black, white, primary} from '@constants/colors';
 
 interface MapViewProps {
@@ -28,8 +28,8 @@ const MapView = ({
     if (
       latitude &&
       longitude &&
-      latitude !== config.INITIAL_LATITUDE &&
-      longitude !== config.INITIAL_LONGITUDE &&
+      latitude !== constants.INITIAL_LATITUDE &&
+      longitude !== constants.INITIAL_LONGITUDE &&
       mapRef.current
     ) {
       mapRef.current!.animateCamera({
@@ -37,10 +37,10 @@ const MapView = ({
           latitude: latitude,
           longitude: longitude,
         },
-        pitch: config.PITCH,
-        heading: config.HEADING,
-        altitude: config.ALTITUDE,
-        zoom: config.ZOOM,
+        pitch: constants.PITCH,
+        heading: constants.HEADING,
+        altitude: constants.ALTITUDE,
+        zoom: constants.ZOOM,
       });
       console.log('animateCamera');
     }
@@ -53,13 +53,13 @@ const MapView = ({
         customMapStyle={theme === 'dark' ? darkTheme : lightTheme}
         initialCamera={{
           center: {
-            latitude: latitude ? latitude : config.INITIAL_LATITUDE,
-            longitude: longitude ? longitude : config.INITIAL_LONGITUDE,
+            latitude: latitude ? latitude : constants.INITIAL_LATITUDE,
+            longitude: longitude ? longitude : constants.INITIAL_LONGITUDE,
           },
-          heading: config.HEADING,
-          pitch: config.PITCH,
-          altitude: config.ALTITUDE,
-          zoom: config.ZOOM,
+          heading: constants.HEADING,
+          pitch: constants.PITCH,
+          altitude: constants.ALTITUDE,
+          zoom: constants.ZOOM,
         }}
         showsCompass={false}
         mapPadding={{bottom: 200, left: 64, right: 0, top: 0}}

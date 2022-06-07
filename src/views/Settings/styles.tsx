@@ -6,7 +6,7 @@ interface SearchProps {
   theme: 'dark' | 'light';
 }
 
-export const SearchContainer = styled.View<SearchProps>`
+export const SearchContainer = styled.SafeAreaView<SearchProps>`
   flex: 1;
   width: 100%;
   background-color: ${grey200};

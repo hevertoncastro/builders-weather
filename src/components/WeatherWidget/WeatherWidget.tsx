@@ -1,9 +1,12 @@
 import React from 'react';
 import {Animated} from 'react-native';
-import Config from 'react-native-config';
+import {useSelector} from 'react-redux';
 import {useBounceAnimation} from '@hooks/useBounceAnimation';
 import {grey1000, grey700, info, primary} from '@constants/colors';
 import WeatherIcon from '../WeatherIcon';
+import {RootState} from '~types/store';
+import Config from 'react-native-config';
+import constants from '@constants/index';
 import {
   WeatherWidgetWrapper,
   City,
@@ -43,6 +46,8 @@ export default function ({
   visibility,
 }: WeatherWidgetProps) {
   const verticalVal = useBounceAnimation();
+  const language =
+    useSelector((state: RootState) => state.settings.language) || 'pt_br';
 
   return (
     <WeatherWidgetWrapper
@@ -71,7 +76,9 @@ export default function ({
               source={require('@assets/icons/humidity.png')}
             />
             <AsideInfoTitle>{humidity}%</AsideInfoTitle>
-            <AsideInfoDescription>Humidity</AsideInfoDescription>
+            <AsideInfoDescription>
+              {constants.TEXTS[language].HUMIDITY}
+            </AsideInfoDescription>
           </AsideInfoHolder>
         ) : null}
         {wind ? (
@@ -81,7 +88,9 @@ export default function ({
               source={require('@assets/icons/wind.png')}
             />
             <AsideInfoTitle>{wind}m/s</AsideInfoTitle>
-            <AsideInfoDescription>Wind</AsideInfoDescription>
+            <AsideInfoDescription>
+              {constants.TEXTS[language].WIND}
+            </AsideInfoDescription>
           </AsideInfoHolder>
         ) : null}
         {visibility ? (
@@ -91,7 +100,9 @@ export default function ({
               source={require('@assets/icons/visibility.png')}
             />
             <AsideInfoTitle>{Math.round(visibility / 1000)}km</AsideInfoTitle>
-            <AsideInfoDescription>Visibility</AsideInfoDescription>
+            <AsideInfoDescription>
+              {constants.TEXTS[language].VISIBILITY}
+            </AsideInfoDescription>
           </AsideInfoHolder>
         ) : null}
       </AsideInfo>

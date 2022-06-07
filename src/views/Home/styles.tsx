@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
+import {white} from '@constants/colors';
 
-export const HomeContainer = styled.ScrollView`
+export const HomeContainer = styled.SafeAreaView`
   flex: 1;
-  width: 100%;
+  background-color: ${white};
 `;

@@ -10,12 +10,12 @@ import settings from './reducers/settings';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['language', 'units', 'theme'],
+  whitelist: ['settings'],
 };
 
 // Combining reducers
 const reducers = combineReducers({
-  settings,
+  settings: persistReducer(persistConfig, settings),
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -21,21 +21,21 @@ export default {
 
   // TEXTS
   TEXTS: {
-    EN: {
+    en: {
       SEARCH_TITLE: 'Search new place',
       SEARCH_PLACEHOLDER: 'Search',
       HUMIDITY: 'Humidity',
       WIND: 'Wind',
       VISIBILITY: 'Visibility',
     },
-    PT_BR: {
+    pt_br: {
       SEARCH_TITLE: 'Buscar novo local',
       SEARCH_PLACEHOLDER: 'Buscar',
       HUMIDITY: 'Umidade',
       WIND: 'Vento',
       VISIBILITY: 'Visibilidade',
     },
-    ES: {
+    es: {
       SEARCH_TITLE: 'Buscar nuevo lugar',
       SEARCH_PLACEHOLDER: 'Buscar',
       HUMIDITY: 'Humedad',
@@ -43,6 +43,7 @@ export default {
       VISIBILITY: 'Visibilidad',
     },
   },
+
   WEATHER_ICONS: {
     200: {
       day: require('@assets/icons/11d.png'),
