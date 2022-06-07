@@ -19,6 +19,7 @@ export const MainInfo = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  min-height: 160px;
 `;
 
 export const MainInfoIcon = styled.View`
@@ -70,6 +71,7 @@ export const AsideInfo = styled.View`
   border-top-color: ${info};
   border-top-width: 1px;
   border-style: solid;
+  min-height: 78px;
 `;
 
 export const AsideInfoHolder = styled.View`

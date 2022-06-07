@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import Config from 'react-native-config';
-// import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView from '@components/MapView';
 import WeatherWidget from '@components/WeatherWidget';
@@ -27,6 +27,7 @@ export default function ({navigation, route}) {
   const [longitude, setLongitude] = useState(0);
   const [weatherData, setWeatherData]: WeatherApiResponseType | undefined =
     useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
   const {colorScheme, isDarkMode} = useUserColorScheme();
   const language =
     useSelector((state: RootState) => state.settings.language) || 'pt_br';
@@ -179,6 +180,7 @@ export default function ({navigation, route}) {
       );
       if (weatherResponse) {
         setWeatherData(weatherResponse);
+        setIsLoading(false);
       }
       console.log('isGesture', isGesture);
     },
@@ -200,14 +202,13 @@ export default function ({navigation, route}) {
     getDeviceCurrentLocation();
   }, [getDeviceCurrentLocation]);
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log('useFocusEffect');
-  //     return () => {
-  //       console.log('useFocusEffect clear');
-  //     };
-  //   }, []),
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setIsLoading(true);
+      };
+    }, []),
+  );
 
   return (
     <HomeContainer>
@@ -223,7 +224,7 @@ export default function ({navigation, route}) {
         />
         <SearchInput
           theme={colorScheme}
-          cityName={weatherData?.name}
+          cityName={isLoading ? '' : weatherData?.name}
           onPress={() => {
             navigation.navigate('Search');
           }}
@@ -264,6 +265,7 @@ export default function ({navigation, route}) {
           humidity={weatherData?.main?.humidity}
           wind={weatherData?.wind?.speed}
           visibility={weatherData?.visibility}
+          loading={isLoading}
         />
       ) : null}
     </HomeContainer>

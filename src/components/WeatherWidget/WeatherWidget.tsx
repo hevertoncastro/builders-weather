@@ -1,11 +1,10 @@
 import React from 'react';
-import {Animated} from 'react-native';
+import {Animated, ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useBounceAnimation} from '@hooks/useBounceAnimation';
 import {grey1000, grey700, info, primary} from '@constants/colors';
 import WeatherIcon from '../WeatherIcon';
 import {RootState} from '~types/store';
-import Config from 'react-native-config';
 import constants from '@constants/index';
 import {
   WeatherWidgetWrapper,
@@ -32,6 +31,7 @@ interface WeatherWidgetProps {
   humidity: number;
   wind: number;
   visibility: number;
+  loading?: boolean;
 }
 
 export default function ({
@@ -44,6 +44,7 @@ export default function ({
   humidity,
   wind,
   visibility,
+  loading = false,
 }: WeatherWidgetProps) {
   const verticalVal = useBounceAnimation();
   const language =
@@ -55,23 +56,29 @@ export default function ({
     <WeatherWidgetWrapper
       colors={theme === 'dark' ? [grey700, grey1000] : [info, primary]}>
       <MainInfo>
-        <Animated.View
-          style={{
-            transform: [{translateY: verticalVal}],
-          }}>
-          <MainInfoIcon>
-            <WeatherIcon iconCode={weatherCode} theme={currentTime} />
-          </MainInfoIcon>
-        </Animated.View>
-        <MainInfoTexts>
-          {cityName ? <City numberOfLines={1}>{cityName}</City> : null}
-          <Temperature>{Math.round(temperature)}º</Temperature>
-          <Description numberOfLines={2}>{description}</Description>
-        </MainInfoTexts>
+        {loading ? (
+          <ActivityIndicator size={80} color={primary} />
+        ) : (
+          <>
+            <Animated.View
+              style={{
+                transform: [{translateY: verticalVal}],
+              }}>
+              <MainInfoIcon>
+                <WeatherIcon iconCode={weatherCode} theme={currentTime} />
+              </MainInfoIcon>
+            </Animated.View>
+            <MainInfoTexts>
+              {cityName ? <City numberOfLines={1}>{cityName}</City> : null}
+              <Temperature>{Math.round(temperature)}º</Temperature>
+              <Description numberOfLines={2}>{description}</Description>
+            </MainInfoTexts>
+          </>
+        )}
       </MainInfo>
 
       <AsideInfo>
-        {humidity ? (
+        {humidity && !loading ? (
           <AsideInfoHolder>
             <AsideInfoIcon
               resizeMode="center"
@@ -83,7 +90,7 @@ export default function ({
             </AsideInfoDescription>
           </AsideInfoHolder>
         ) : null}
-        {wind ? (
+        {wind && !loading ? (
           <AsideInfoHolder>
             <AsideInfoIcon
               resizeMode="center"
@@ -98,7 +105,7 @@ export default function ({
             </AsideInfoDescription>
           </AsideInfoHolder>
         ) : null}
-        {visibility ? (
+        {visibility && !loading ? (
           <AsideInfoHolder>
             <AsideInfoIcon
               resizeMode="center"

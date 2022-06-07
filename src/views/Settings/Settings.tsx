@@ -12,11 +12,11 @@ import {RootState} from '~types/store';
 import {LanguagesType, ThemeType, UnitsType} from '~types/settings';
 
 const languages = [
-  {label: 'Português', value: 'pt_br'},
-  {label: 'English', value: 'en'},
-  {label: 'Espanhol', value: 'es'},
-  {label: 'Ukrainian', value: 'ua'},
-  {label: 'Chinese', value: 'zh_cn'},
+  {label: '🇧🇷  Português', value: 'pt_br'},
+  {label: '🇬🇧  English', value: 'en'},
+  {label: '🇪🇸  Espanhol', value: 'es'},
+  {label: '🇺🇦  Ukrainian', value: 'ua'},
+  {label: '🇨🇳  Chinese', value: 'zh_cn'},
 ];
 
 const units = [
