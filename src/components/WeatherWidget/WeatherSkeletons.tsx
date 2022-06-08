@@ -4,13 +4,27 @@ import {grey550, grey650, info100, info200} from '@constants/colors';
 
 interface WeatherSkeletonsProps {
   theme?: 'dark' | 'light';
-  type: 'main' | 'aside';
+  type: 'icon' | 'main' | 'aside';
 }
 
 export default function ({
   theme = 'light',
   type = 'main',
 }: WeatherSkeletonsProps) {
+  if (type === 'icon') {
+    return (
+      <ContentLoader
+        speed={0.7}
+        width={170}
+        height={112}
+        opacity={theme === 'dark' ? 0.5 : 1}
+        viewBox="0 0 170 150"
+        backgroundColor={theme === 'dark' ? grey650 : info100}
+        foregroundColor={theme === 'dark' ? grey550 : info200}>
+        <Rect x="0" y="0" rx="40" ry="40" width="170" height="150" />
+      </ContentLoader>
+    );
+  }
   if (type === 'main') {
     return (
       <ContentLoader

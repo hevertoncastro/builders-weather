@@ -9,11 +9,7 @@ interface MapViewProps {
   theme: 'dark' | 'light';
   latitude: number;
   longitude: number;
-  onChangeLocation: (
-    newLatitude: number,
-    newLongitude: number,
-    isGesture: boolean | undefined,
-  ) => void;
+  onChangeLocation: (newLatitude: number, newLongitude: number) => void;
 }
 
 const MapView = ({
@@ -42,7 +38,6 @@ const MapView = ({
         altitude: constants.ALTITUDE,
         zoom: constants.ZOOM,
       });
-      console.log('animateCamera');
     }
   }, [latitude, longitude]);
 
@@ -68,12 +63,8 @@ const MapView = ({
         loadingBackgroundColor={theme === 'dark' ? grey700 : white}
         style={StyleSheet.absoluteFillObject}
         rotateEnabled={false}
-        onRegionChangeComplete={(region, isGesture) => {
-          onChangeLocation(
-            region.latitude,
-            region.longitude,
-            isGesture?.isGesture,
-          );
+        onRegionChangeComplete={region => {
+          onChangeLocation(region.latitude, region.longitude);
         }}
       />
     </View>

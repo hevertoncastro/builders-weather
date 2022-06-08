@@ -63,7 +63,6 @@ export default function ({navigation}) {
         fetchDetails={true}
         minLength={3}
         onPress={(data, details = null) => {
-          console.log(details?.geometry?.location);
           if (details?.geometry?.location) {
             navigation.navigate('Home', {
               latitude: details?.geometry?.location?.lat,

@@ -1,9 +1,9 @@
 import React from 'react';
-import {Animated, ActivityIndicator} from 'react-native';
+import {Animated} from 'react-native';
 import {useSelector} from 'react-redux';
 import WeatherSkeletons from './WeatherSkeletons';
 import {useBounceAnimation} from '@hooks/useBounceAnimation';
-import {grey1000, grey650, grey700, info, primary} from '@constants/colors';
+import {grey1000, grey700, info, primary} from '@constants/colors';
 import WeatherIcon from '../WeatherIcon';
 import {RootState} from '~types/store';
 import constants from '@constants/index';
@@ -56,21 +56,21 @@ export default function ({
     <WeatherWidgetWrapper
       colors={theme === 'dark' ? [grey700, grey1000] : [info, primary]}>
       <MainInfo>
-        <Animated.View
-          style={{
-            transform: [{translateY: verticalVal}],
-          }}>
+        {loading ? (
           <MainInfoIcon>
-            {loading ? (
-              <ActivityIndicator
-                size={80}
-                color={theme === 'dark' ? grey650 : info}
-              />
-            ) : (
-              <WeatherIcon iconCode={weatherCode} theme={currentTime} />
-            )}
+            <WeatherSkeletons theme={theme} type="icon" />
           </MainInfoIcon>
-        </Animated.View>
+        ) : (
+          <Animated.View
+            style={{
+              transform: [{translateY: verticalVal}],
+            }}>
+            <MainInfoIcon>
+              <WeatherIcon iconCode={weatherCode} theme={currentTime} />
+            </MainInfoIcon>
+          </Animated.View>
+        )}
+
         <MainInfoTexts>
           {loading ? (
             <WeatherSkeletons theme={theme} type="main" />

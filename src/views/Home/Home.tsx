@@ -71,28 +71,21 @@ export default function ({navigation, route}) {
     }
   };
 
-  const getWeatherData = useCallback(() => {
-    return fetchWeatherData(latitude, longitude, units, language);
-  }, [latitude, longitude, language, units]);
-
   const handleMapLocationChange = useCallback(
-    async (
-      newLatitude: number,
-      newLongitude: number,
-      isGesture: boolean | undefined,
-    ) => {
+    async (newLatitude: number, newLongitude: number) => {
       setIsLoading(true);
-      const weatherResponse: WeatherApiResponseType = await getWeatherData(
+      const weatherResponse: WeatherApiResponseType = await fetchWeatherData(
         newLatitude,
         newLongitude,
+        units,
+        language,
       );
       if (weatherResponse) {
         setWeatherData(weatherResponse);
         setIsLoading(false);
       }
-      console.log('isGesture', isGesture);
     },
-    [getWeatherData],
+    [units, language],
   );
 
   useEffect(() => {
@@ -101,7 +94,7 @@ export default function ({navigation, route}) {
       setLongitude(params?.longitude);
     }
     if (params?.from === 'Settings') {
-      handleMapLocationChange(latitude, longitude, false);
+      handleMapLocationChange(latitude, longitude);
     }
   }, [params, handleMapLocationChange, latitude, longitude]);
 
@@ -141,7 +134,7 @@ export default function ({navigation, route}) {
           theme={colorScheme}
           iconName="reload"
           onPress={() => {
-            handleMapLocationChange(latitude, longitude, false);
+            handleMapLocationChange(latitude, longitude);
           }}
         />
       </Header>
