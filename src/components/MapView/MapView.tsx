@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import RNMapView from 'react-native-maps';
 import {darkTheme, lightTheme} from '@constants/maps';
 import constants from '@constants/index';
-import {black, white, primary} from '@constants/colors';
+import {white, primary, grey700} from '@constants/colors';
 
 interface MapViewProps {
   theme: 'dark' | 'light';
@@ -62,10 +62,10 @@ const MapView = ({
           zoom: constants.ZOOM,
         }}
         showsCompass={false}
-        mapPadding={{bottom: 200, left: 64, right: 0, top: 0}}
+        mapPadding={{bottom: 200, left: 16, right: 0, top: 0}}
         loadingEnabled
         loadingIndicatorColor={primary}
-        loadingBackgroundColor={theme === 'dark' ? black : white}
+        loadingBackgroundColor={theme === 'dark' ? grey700 : white}
         style={StyleSheet.absoluteFillObject}
         rotateEnabled={false}
         onRegionChangeComplete={(region, isGesture) => {

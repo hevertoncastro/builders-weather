@@ -9,7 +9,7 @@ import {SearchContainer, SearchHeaderTitle} from './styles';
 import Header from '@components/Header';
 import constants from '@constants/index';
 import {RootState} from '~types/store';
-import {black, grey700, link, white} from '@constants/colors';
+import {black, grey700, info, white} from '@constants/colors';
 
 export default function ({navigation}) {
   const {colorScheme, isDarkMode} = useUserColorScheme();
@@ -18,7 +18,7 @@ export default function ({navigation}) {
 
   return (
     <SearchContainer theme={colorScheme}>
-      <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Header justify="flex-start">
         <RoundButton
           theme={isDarkMode ? 'dark' : 'light'}
@@ -41,6 +41,7 @@ export default function ({navigation}) {
           container: {
             width: '90%',
             alignSelf: 'center',
+            maxHeight: '68%',
           },
           textInput: {
             marginTop: 24,
@@ -49,7 +50,7 @@ export default function ({navigation}) {
             backgroundColor: isDarkMode ? grey700 : white,
           },
           predefinedPlacesDescription: {
-            color: link,
+            color: info,
           },
           row: {
             backgroundColor: isDarkMode ? grey700 : white,
@@ -58,7 +59,9 @@ export default function ({navigation}) {
             color: isDarkMode ? white : black,
           },
         }}
+        enablePoweredByContainer={false}
         fetchDetails={true}
+        minLength={3}
         onPress={(data, details = null) => {
           console.log(details?.geometry?.location);
           if (details?.geometry?.location) {

@@ -174,6 +174,7 @@ export default function ({navigation, route}) {
       newLongitude: number,
       isGesture: boolean | undefined,
     ) => {
+      setIsLoading(true);
       const weatherResponse: WeatherApiResponseType = await getWeatherData(
         newLatitude,
         newLongitude,
@@ -225,6 +226,7 @@ export default function ({navigation, route}) {
         <SearchInput
           theme={colorScheme}
           cityName={isLoading ? '' : weatherData?.name}
+          loading={isLoading}
           onPress={() => {
             navigation.navigate('Search');
           }}

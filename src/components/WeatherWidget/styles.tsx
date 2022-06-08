@@ -25,11 +25,16 @@ export const MainInfo = styled.View`
 export const MainInfoIcon = styled.View`
   width: 160px;
   height: 160px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const MainInfoTexts = styled.View`
+  min-width: 120px;
+  min-height: 100px;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
 `;
 
 export const City = styled.Text`

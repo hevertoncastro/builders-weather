@@ -12,6 +12,7 @@ export const SelectHolder = styled.View`
 export const ArrowIconImage = styled.Image`
   width: 16px;
   height: 16px;
+  margin-right: 8px;
 `;
 
 export const SelectLabel = styled.Text<SelectProps>`
