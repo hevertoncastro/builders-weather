@@ -21,30 +21,37 @@ The app fetches weather information around the world and shows them in a friendl
 
 Both light and dark themes were created, allowing the user to change it manually or based on the system.
 
-<img src="docs/images/new-york-light-fahrenheit.png" alt="new-york-light-fahrenheit" width="300"/>
-<img src="docs/images/new-york-dark-fahrenheit.png" alt="new-york-dark-fahrenheit" width="300"/>
+<p float="left">
+  <img src="docs/images/new-york-light-fahrenheit.png" alt="new-york-light-fahrenheit" width="300"/>
+  <img src="docs/images/new-york-dark-fahrenheit.png" alt="new-york-dark-fahrenheit" width="300"/>
+</p>
 
 ### 🌓  Day and night icons
 
 The weather icons change between day and night pack based on timezone, sunrise, and sunset data received from the API.
 
-<img src="docs/images/budapest-light-portuguese.png" alt="budapest-light-portuguese" width="300"/>
-<img src="docs/images/budapest-dark-chinese.png" alt="budapest-dark-chinese" width="300"/>
+<p float="left">
+  <img src="docs/images/budapest-light-portuguese.png" alt="budapest-light-portuguese" width="300"/>
+  <img src="docs/images/budapest-dark-chinese.png" alt="budapest-dark-chinese" width="300"/>
+</p>
 
 ### 🔎 Search
 
 The search page has an autocomplete field that fetches data from Google Places API and navigates the user to the newly selected location.
 
-<img src="docs/images/search-light-portuguese.png" alt="search-light-portuguese" width="300"/>
-<img src="docs/images/search-dark-chinese.png" alt="search-dark-chinese" width="300"/>
+<p float="left">
+  <img src="docs/images/search-light-portuguese.png" alt="search-light-portuguese" width="300"/>
+  <img src="docs/images/search-dark-chinese.png" alt="search-dark-chinese" width="300"/>
+</p>
 
 ### 🌎  Translation and units
 
 The user can change the entire app language (there are 6 languages available), and units to see the weather data in metric or imperial.
 
-
-<img src="docs/images/settings-light-portuguese.png" alt="settings-light-portuguese" width="300"/>
-<img src="docs/images/settings-dark-english.png" alt="settings-dark-english" width="300"/>
+<p float="left">
+  <img src="docs/images/settings-light-portuguese.png" alt="settings-light-portuguese" width="300"/>
+  <img src="docs/images/settings-dark-english.png" alt="settings-dark-english" width="300"/>
+</p>
 
 ---
 
@@ -102,6 +109,10 @@ For further information, please access [React Native's documentation page](https
 
 
 If you can't get this to work, see the [Troubleshooting page](https://reactnative.dev/docs/troubleshooting).
+
+#### Environment
+
+Duplicate the `.env.example` as `.env` and fill up the API keys gotten from each API to get the app working.
 
 ---
 
