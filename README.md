@@ -11,7 +11,7 @@ The app fetches weather information around the world and shows them in a friendl
 
 [![Video of the app being used](https://img.youtube.com/vi/UxHzZpVsBWA/0.jpg)](https://www.youtube.com/watch?v=UxHzZpVsBWA)
 
-[https://www.youtube.com/watch?v=UxHzZpVsBWA](https://www.youtube.com/watch?v=UxHzZpVsBWA)
+Watch on YouTube (2m45s): [www.youtube.com/watch?v=UxHzZpVsBWA](https://www.youtube.com/watch?v=UxHzZpVsBWA)
 
 ---
 
@@ -57,17 +57,17 @@ The user can change the entire app language (there are 6 languages available), a
 
 ## Some of the libraries used
 
-- **react-redux** (Used for global state management)
-- **redux-persist** (Used to persist store data when reopening the app)
-- **@react-native-community/async-storage** (Used for saving and retrieving data)
-- **react-native-geolocation-service** (Used to get user's GPS position)
-- **react-native-google-places-autocomplete** (Used to search places around the world)
-- **react-native-maps** (Used to show and navigate through the Google Maps natively)
-- **@react-navigation/native** (Used for screens navigation)
-- **react-native-select-dropdown** (Used to create custom selects in the settings screen)
-- **styled-components** (Used for styling with CSS syntax)
-- **react-content-loader** (Used to draw skeletons loaders)
-- **react-native-svg** (Used to easily handle SVG vectors)
+- [**react-redux**](https://github.com/reduxjs/react-redux) (Used for global state management)
+- [**redux-persist**](https://github.com/rt2zz/redux-persist) (Used to persist store data when reopening the app)
+- [**@react-native-community/async-storage**](https://github.com/react-native-async-storage/async-storage) (Used for saving and retrieving data)
+- [**react-native-geolocation-service**](https://github.com/Agontuk/react-native-geolocation-service) (Used to get user's GPS position)
+- [**react-native-google-places-autocomplete**](https://github.com/FaridSafi/react-native-google-places-autocomplete) (Used to search places around the world)
+- [**react-native-maps**](https://github.com/react-native-maps/react-native-maps) (Used to show and navigate through the Google Maps natively)
+- [**@react-navigation/native**](https://github.com/react-navigation/react-navigation) (Used for screens navigation)
+- [**react-native-select-dropdown**](https://github.com/AdelRedaa97/react-native-select-dropdown) (Used to create custom selects in the settings screen)
+- [**styled-components**](https://github.com/styled-components/styled-components) (Used for styling with CSS syntax)
+- [**react-content-loader**](https://github.com/danilowoz/react-content-loader) (Used to draw skeletons loaders)
+- [**react-native-svg**](https://github.com/react-native-svg/react-native-svg) (Used to easily handle SVG vectors)
 
 
 You may find more information on the libraries used in `package.json`.
