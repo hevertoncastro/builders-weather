@@ -1,6 +1,6 @@
 # About the project
 
-This app was developed for a position at Builders using React Native (with React Native CLI), consuming data from [Open Weather API](https://openweathermap.org/) and [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview).
+This app was developed using React Native (with React Native CLI), consuming data from [Open Weather API](https://openweathermap.org/) and [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview).
 
 ---
 
